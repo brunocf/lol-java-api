@@ -8,10 +8,13 @@ import com.github.brunocf.lolapi.enums.Region;
 import com.github.brunocf.lolapi.structures.champion.ChampionListDto;
 import com.google.gson.Gson;
 
+/*
+ * Access to "champion-v1.1"
+ */
 public class Champion {
 
-	public static final String VERSION = "v1.1";
-	public static final String ENDPOINT = "http://prod.api.pvp.net/api/lol/{region}/{version}/champion?";
+	private static final String VERSION = "v1.1";
+	private static final String ENDPOINT = "http://prod.api.pvp.net/api/lol/{region}/{version}/champion?";
 	
 	private static final Gson gson = new Gson();
 	private String apiKey;
@@ -24,7 +27,7 @@ public class Champion {
 	public ChampionListDto getChampionList(Region region) throws HttpGetException {
 		
 		String url = ENDPOINT;
-		url = url.replace("{region}", region.toString());
+		url = url.replace("{region}", region.toString().toLowerCase());
 		url = url.replace("{version}", VERSION);
 		
 		String resp = HttpConnection.sendGet(url, apiKey, null);
@@ -36,7 +39,7 @@ public class Champion {
 	public ChampionListDto getFeeWeekChampionList(Region region) throws HttpGetException {
 		
 		String url = ENDPOINT;
-		url = url.replace("{region}", region.toString());
+		url = url.replace("{region}", region.toString().toLowerCase());
 		url = url.replace("{version}", VERSION);
 		
 		Hashtable<String, String> parameters = new Hashtable<>();

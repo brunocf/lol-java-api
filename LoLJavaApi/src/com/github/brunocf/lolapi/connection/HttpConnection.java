@@ -26,7 +26,7 @@ public class HttpConnection {
 					String key = keyList.nextElement();
 					String value = parameters.get(key);
 					if(key != null && value != null) {
-						url += "?" + key + "=" + value;
+						url += "&" + key + "=" + value;
 					}
 				}
 				
@@ -40,14 +40,17 @@ public class HttpConnection {
 			con.setRequestMethod("GET");
 	 
 			int responseCode = con.getResponseCode();
-			if(responseCode == 400){
-				throw new HttpGetException("Bad Request");
-			}
-			if(responseCode == 500){
-				throw new HttpGetException("Internal server error");
-			}
-			if(responseCode != 200){
-				throw new HttpGetException("Response Code Error: " + responseCode);
+			switch (responseCode) {
+			case 400:
+				throw new HttpGetException("Bad Request", responseCode);
+			case 500:
+				throw new HttpGetException("Internal server error", responseCode);
+			case 404:
+				throw new HttpGetException("Summoner not found", responseCode);
+			default:
+				if(responseCode != 200) {
+					throw new HttpGetException("Response Error", responseCode);
+				}
 			}
 	 
 			BufferedReader in = new BufferedReader(
@@ -63,9 +66,9 @@ public class HttpConnection {
 			return response.toString();
 		
 		} catch (MalformedURLException e) {
-			throw new HttpGetException("Malformed URL", e);
+			throw new HttpGetException("Malformed URL", e, 0);
 		} catch (IOException e) {
-			throw new HttpGetException("IO Exception", e);
+			throw new HttpGetException("IO Exception", e, 0);
 		}
 	}
  
