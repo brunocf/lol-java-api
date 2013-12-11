@@ -19,7 +19,7 @@ public class HttpConnection {
 		try {
 		
 			// Setting URL Parameters
-			url += "api_key=" + apiKey;
+			url += "?api_key=" + apiKey;
 			if(parameters != null){
 				Enumeration<String> keyList = parameters.keys();
 				while(keyList.hasMoreElements()){
@@ -43,10 +43,12 @@ public class HttpConnection {
 			switch (responseCode) {
 			case 400:
 				throw new HttpGetException("Bad Request", responseCode);
-			case 500:
-				throw new HttpGetException("Internal server error", responseCode);
+			case 401:
+				throw new HttpGetException("Unauthorized", responseCode);
 			case 404:
 				throw new HttpGetException("Summoner not found", responseCode);
+			case 500:
+				throw new HttpGetException("Internal server error", responseCode);
 			default:
 				if(responseCode != 200) {
 					throw new HttpGetException("Response Error", responseCode);

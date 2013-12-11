@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public class Champion {
 
 	private static final String VERSION = "v1.1";
-	private static final String ENDPOINT = "http://prod.api.pvp.net/api/lol/{region}/{version}/champion?";
+	private static final String ENDPOINT = "http://prod.api.pvp.net/api/lol/{region}/{version}/champion";
 	
 	private static final Gson gson = new Gson();
 	private String apiKey;
