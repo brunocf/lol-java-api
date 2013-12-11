@@ -10,9 +10,7 @@ import com.github.brunocf.lolapi.structures.league.LeagueDto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-/*
- * Access to "game-v1.1" calls 
- */
+
 public class League {
 
 	private static final String VERSION = "v2.1";

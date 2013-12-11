@@ -8,9 +8,7 @@ import com.github.brunocf.lolapi.enums.Region;
 import com.github.brunocf.lolapi.structures.champion.ChampionListDto;
 import com.google.gson.Gson;
 
-/*
- * Access to "champion-v1.1"
- */
+
 public class Champion {
 
 	private static final String VERSION = "v1.1";

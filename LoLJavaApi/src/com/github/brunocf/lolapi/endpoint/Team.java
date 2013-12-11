@@ -3,26 +3,26 @@ package com.github.brunocf.lolapi.endpoint;
 import com.github.brunocf.lolapi.connection.HttpConnection;
 import com.github.brunocf.lolapi.connection.HttpGetException;
 import com.github.brunocf.lolapi.enums.Region;
-import com.github.brunocf.lolapi.structures.game.RecentGamesDto;
+import com.github.brunocf.lolapi.structures.team.TeamDto;
 import com.google.gson.Gson;
 
 
-public class Game {
+public class Team {
 
-	private static final String VERSION = "v1.1";
-	private static final String ENDPOINT = "http://prod.api.pvp.net/api/lol/{region}/{version}/game/by-summoner/{summonerId}/recent";
+	private static final String VERSION = "v2.1";
+	private static final String ENDPOINT = "http://prod.api.pvp.net/api/{region}/{version}/team/by-summoner/{summonerId}";
 	
 	private static final Gson gson = new Gson();
 	private String apiKey;
 	
-	public Game(String apiKey) {
+	public Team(String apiKey) {
 		this.apiKey = apiKey;
 	}
 	
 	/*
-	 * Get recent games by summoner ID (REST)
+	 * Retrieves teams for given summoner ID (REST)
 	 */
-	public RecentGamesDto getSummonerRecentGames(Region region, long summonerId) throws HttpGetException {
+	public TeamDto[] getSummonerTeams(Region region, long summonerId) throws HttpGetException {
 		
 		String url = ENDPOINT;
 		url = url.replace("{region}", region.toString().toLowerCase());
@@ -31,7 +31,7 @@ public class Game {
 		
 		String resp = HttpConnection.sendGet(url, apiKey, null);
 		
-		return gson.fromJson(resp, RecentGamesDto.class);
+		return gson.fromJson(resp, TeamDto[].class);
 	
 	}
 	
